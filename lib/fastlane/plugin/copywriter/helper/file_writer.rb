@@ -36,7 +36,9 @@ module Fastlane
       end
 
       def self.write_leaf_enum_header(file, name)
-        file.write("\n\tenum #{name.capitalize} {\n")
+        value = name.dup
+        value[0] = value[0].capitalize
+        file.write("\n\tenum #{value} {\n")
       end
 
       def self.write_leaf_enum_footer(file)
@@ -44,7 +46,8 @@ module Fastlane
       end
 
       def self.write_property(file, value, indent)
-        key = value.split("_").map(&:capitalize).join
+        key = value
+        key = key.split("_")[1..-1].map(&:capitalize).join if key.include?("_")
         key = key[0,1].downcase + key[1..-1]
         file.write("#{"\t" * indent}static var #{key}: String { NSLocalizedString(\"#{value}\", comment: \"\") }\n")
       end
