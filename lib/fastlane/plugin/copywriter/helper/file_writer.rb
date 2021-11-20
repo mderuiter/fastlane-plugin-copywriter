@@ -46,8 +46,8 @@ module Fastlane
       end
 
       def self.write_property(file, value, indent)
-        key = value
-        key = key.split("_")[1..-1].map(&:capitalize).join if key.include?("_")
+        title = value.include?("_") ? value.split("_")[0] : ""
+        key = value.sub(title, '').gsub(/(?:_|^)(\w)/){$1.upcase}
         key = key[0,1].downcase + key[1..-1]
         file.write("#{"\t" * indent}static var #{key}: String { NSLocalizedString(\"#{value}\", comment: \"\") }\n")
       end
