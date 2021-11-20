@@ -1,0 +1,6 @@
+lane :test do
+  copywriter(
+    input: "./.tmp/input.strings",
+    output: "./.tmp/output.swift"
+  )
+end
